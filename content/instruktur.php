@@ -34,12 +34,15 @@
                             <tr>
                                 <td><?php echo $index += 1; ?></td>
                                 <td><?php echo $row['name'] ?></td>
-                                <td><?php echo $row['gender'] ?></td>
+                                <td><?php echo ($row['gender'] == '0') ? 'Laki-laki' : (($row['gender'] == '1') ? 'Perempuan' : '-'); ?></td>
                                 <td><?php echo $row['education'] ?></td>
                                 <td><?php echo $row['phone'] ?></td>
                                 <td><?php echo $row['email'] ?></td>
                                 <td><?php echo $row['address'] ?></td>
                                 <td>
+                                    <a href="?page=tambah-instruktur-major&id=<?php echo $row['id'] ?>"
+                                        class="btn btn-warning">Add Major</a>
+
                                     <a href="?page=tambah-instruktur&edit=<?php echo $row['id'] ?>"
                                         class="btn btn-primary">Edit</a>
                                         <a onclick ="return confirm ('Are you sure wanna delete this data?')"

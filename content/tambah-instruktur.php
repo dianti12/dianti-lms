@@ -26,10 +26,6 @@ if(isset($_GET['delete'])){
                     header("location:?page=instruktur&ubah=berhasil");
                 } 
             }
-            
-        
-    
-
 
 ?>
 
@@ -50,10 +46,10 @@ if(isset($_GET['delete'])){
                     <div class="mb-3">
                         <label for="">Jenis Kelamin</label>
                         <div class="col-sm-10">
-                            <input type="radio" name="gender" value="male"  id="gender_male" required>
+                            <input type="radio" name="gender" value="0"  id="gender_male" required>
                         <label for="gender_male">Male</label>
 
-                        <input type="radio" name="gender" value="female"  id="gender_female" required>
+                        <input type="radio" name="gender" value="1"  id="gender_female" required>
                         <label for="gender_female">Female</label>
                         </div>
                         
