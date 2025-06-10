@@ -1,8 +1,8 @@
 <?php
-    $query = mysqli_query($config, "SELECT * FROM instructors ORDER BY id DESC");
-    //12345, 54321
-    $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
-   
+$query = mysqli_query($config, "SELECT * FROM instructors ORDER BY id DESC");
+//12345, 54321
+$rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
+
 ?>
 
 <div class="row">
@@ -13,10 +13,10 @@
                 <div class="mb-3" align="right">
                     <a href="?page=tambah-instruktur" class="btn btn-primary">Add Instruktur</a>
                 </div>
-                
+
                 <div class="table-responsive">
                     <!-- nama, email, aksi -->
-                     <table class="table table-bordered">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -31,30 +31,30 @@
                         </thead>
                         <tbody>
                             <?php foreach ($rows as $index => $row): ?>
-                            <tr>
-                                <td><?php echo $index += 1; ?></td>
-                                <td><?php echo $row['name'] ?></td>
-                                <td><?php echo ($row['gender'] == '0') ? 'Laki-laki' : (($row['gender'] == '1') ? 'Perempuan' : '-'); ?></td>
-                                <td><?php echo $row['education'] ?></td>
-                                <td><?php echo $row['phone'] ?></td>
-                                <td><?php echo $row['email'] ?></td>
-                                <td><?php echo $row['address'] ?></td>
-                                <td>
-                                    <a href="?page=tambah-instruktur-major&id=<?php echo $row['id'] ?>"
-                                        class="btn btn-warning">Add Major</a>
+                                <tr>
+                                    <td><?php echo $index += 1; ?></td>
+                                    <td><?php echo $row['name'] ?></td>
+                                    <td><?php echo ($row['gender'] == '0') ? 'Laki-laki' : (($row['gender'] == '1') ? 'Perempuan' : '-'); ?></td>
+                                    <td><?php echo $row['education'] ?></td>
+                                    <td><?php echo $row['phone'] ?></td>
+                                    <td><?php echo $row['email'] ?></td>
+                                    <td><?php echo $row['address'] ?></td>
+                                    <td>
+                                        <a href="?page=tambah-instruktur-major&id=<?php echo $row['id'] ?>"
+                                            class="btn btn-warning">Add Major</a>
 
-                                    <a href="?page=tambah-instruktur&edit=<?php echo $row['id'] ?>"
-                                        class="btn btn-primary">Edit</a>
-                                        <a onclick ="return confirm ('Are you sure wanna delete this data?')"
-                                        class="btn btn-danger" name="delete" href="?page=tambah-instruktur&delete=<?php echo $row['id'] ?>">Delete</a>
-                                </td>
-                            </tr>
+                                        <a href="?page=tambah-instruktur&edit=<?php echo $row['id'] ?>"
+                                            class="btn btn-primary">Edit</a>
+                                        <a onclick="return confirm ('Are you sure wanna delete this data?')"
+                                            class="btn btn-danger" name="delete" href="?page=tambah-instruktur&delete=<?php echo $row['id'] ?>">Delete</a>
+                                    </td>
+                                </tr>
                             <?php endforeach ?>
                         </tbody>
-                     </table>
-                     </div>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

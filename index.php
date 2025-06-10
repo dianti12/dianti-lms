@@ -3,33 +3,37 @@
 session_start(); // Start the session to use session variables
 include 'config/koneksi.php'; // Include your database configuration file
 
-if( isset($_POST['email'])) {
-    // print_r($_POST);
-    // die;
-    $_email = $_POST['email'];
-    $_password = sha1($_POST['password']);
-    // If the user is already logged in, redirect to the dashboard or home page
-
-    //Tampilkan semua data  dari tbl user dimana email diambil dari 
-    // orang yang input email dan password diambil dari orang yang input email dan password
+if (isset($_POST['email'])) {
+  // print_r($_POST);
+  // die;
+  $_email = $_POST['email'];
+  $_password = sha1($_POST['password']);
+  $table = "instructors";
+  // If the user is already logged in, redirect to the dashboard or home page
+  $_role = $_POST['role'];
+  if ($_role == 1) {
+    $queryLogin = mysqli_query($config, "SELECT * FROM instructors WHERE email='$_email' AND password='$_password'");
+  } else {
     $queryLogin = mysqli_query($config, "SELECT * FROM users WHERE email='$_email' AND password='$_password'");
-    //jika data ditemukan, mysqli_num_rows akan mengembalikan nilai 1("hasil query")
-  
-        //jika data ditemukan, mysqli_num_rows("hasil query") akan mengembalikan nilai 1
-        // Ambil data user
+  }
 
-        if (mysqli_num_rows($queryLogin) > 0) {
-            // Jika ada data yang cocok, ambil data tersebut
-            // mysqli_fetch_assoc akan mengembalikan data sebagai array asosiatif
-            $rowLogin = mysqli_fetch_assoc($queryLogin);
-            $_SESSION['ID_USER'] = $rowLogin['id']; // Simpan ID user ke session
-            $_SESSION['NAME'] = $rowLogin['name']; // Simpan nama user ke session
-            
-           header("location: home.php"); // Redirect ke halaman home setelah login berhasil
-        } else {
-            // Jika tidak ada data yang cocok, tampilkan pesan error
-           header("location: index.php?login=error");
-        }
+
+  //jika data ditemukan, mysqli_num_rows akan mengembalikan nilai 1("hasil query")
+  //jika data ditemukan, mysqli_num_rows("hasil query") akan mengembalikan nilai 1
+  // Ambil data user
+
+  if (mysqli_num_rows($queryLogin) > 0) {
+    // Jika ada data yang cocok, ambil data tersebut
+    // mysqli_fetch_assoc akan mengembalikan data sebagai array asosiatif
+    $rowLogin = mysqli_fetch_assoc($queryLogin);
+    $_SESSION['ID_USER'] = $rowLogin['id']; // Simpan ID user ke session
+    $_SESSION['NAME'] = $rowLogin['name']; // Simpan nama user ke session
+
+    header("location: home.php"); // Redirect ke halaman home setelah login berhasil
+  } else {
+    // Jika tidak ada data yang cocok, tampilkan pesan error
+    header("location: index.php?login=error");
+  }
 }
 
 ?>
@@ -117,6 +121,16 @@ if( isset($_POST['email'])) {
                     </div>
 
                     <div class="col-12">
+                      <label for="yourRole" class="form-label">Role*</label>
+                      <select class="form-control" name="role" id="yourRole" required>
+                        <option value="" selected disabled>Pilih Role</option>
+                        <option value="1">Instruktur</option>
+                        <option value="2">Siswa</option>
+                        <option value="3">Lainnya</option>
+                        <div class="invalid-feedback">Please Select your Role!</div>
+                    </div>
+
+                    <div class="col-12">
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
                         <label class="form-check-label" for="rememberMe">Remember me</label>
@@ -141,7 +155,7 @@ if( isset($_POST['email'])) {
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-              
+
               </div>
 
             </div>
