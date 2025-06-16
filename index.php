@@ -1,40 +1,33 @@
 <?php
-// $_SESSION, $_POST, and $_GET are superglobals in PHP.
-session_start(); // Start the session to use session variables
-include 'config/koneksi.php'; // Include your database configuration file
+//  $_SESSION, $_POST, $_GET
+session_start();
+include 'config/koneksi.php';
 
 if (isset($_POST['email'])) {
-  // print_r($_POST);
-  // die;
-  $_email = $_POST['email'];
-  $_password = sha1($_POST['password']);
-  $table = "instructors";
-  // If the user is already logged in, redirect to the dashboard or home page
-  $_role = $_POST['role'];
-  if ($_role == 1) {
-    $queryLogin = mysqli_query($config, "SELECT * FROM instructors WHERE email='$_email' AND password='$_password'");
-  } else {
-    $queryLogin = mysqli_query($config, "SELECT * FROM users WHERE email='$_email' AND password='$_password'");
-  }
+  $email    = $_POST['email'];
+  $password = sha1($_POST['password']);
 
+  // tampilkan semua data dari tbl user dimana email diambil dari
+  // orang yg input email dan password di ambil dari orang yang input password
+  // jika login dengan role instruktur
 
-  //jika data ditemukan, mysqli_num_rows akan mengembalikan nilai 1("hasil query")
-  //jika data ditemukan, mysqli_num_rows("hasil query") akan mengembalikan nilai 1
-  // Ambil data user
-
+  $queryLogin = mysqli_query($config, "SELECT * FROM users WHERE 
+    email='$email' AND password='$password'");
+  // jika data ditemukan, mysqli_num_rows("hasil query")
   if (mysqli_num_rows($queryLogin) > 0) {
-    // Jika ada data yang cocok, ambil data tersebut
-    // mysqli_fetch_assoc akan mengembalikan data sebagai array asosiatif
+    // header("location:namafile.php"): meredirect / melempar ke halaman lain
     $rowLogin = mysqli_fetch_assoc($queryLogin);
-    $_SESSION['ID_USER'] = $rowLogin['id']; // Simpan ID user ke session
-    $_SESSION['NAME'] = $rowLogin['name']; // Simpan nama user ke session
+    $_SESSION['ID_USER'] = $rowLogin['id'];
+    $_SESSION['NAME']    = $rowLogin['name'];
 
-    header("location: home.php"); // Redirect ke halaman home setelah login berhasil
+
+    header("location:home.php");
   } else {
-    // Jika tidak ada data yang cocok, tampilkan pesan error
-    header("location: index.php?login=error");
+    header("location:index.php?login=error");
   }
 }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -44,7 +37,7 @@ if (isset($_POST['email'])) {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>LMS PPKD JAKARTA PUSAT</title>
+  <title>POINT OF SALES | PPKD Jakarta Pusat</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -90,7 +83,7 @@ if (isset($_POST['email'])) {
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">LMS PPKD JAKPUS</span>
+                  <span class="d-none d-lg-block">LMS PPKD Jakpus</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -103,7 +96,7 @@ if (isset($_POST['email'])) {
                     <p class="text-center small">Enter your email & password to login</p>
                   </div>
 
-                  <form action="" method="post" class="row g-3 needs-validation" novalidate>
+                  <form method="post" class="row g-3 needs-validation" novalidate>
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Email</label>
@@ -120,15 +113,7 @@ if (isset($_POST['email'])) {
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
 
-                    <div class="col-12">
-                      <label for="yourRole" class="form-label">Role*</label>
-                      <select class="form-control" name="role" id="yourRole" required>
-                        <option value="" selected disabled>Pilih Role</option>
-                        <option value="1">Instruktur</option>
-                        <option value="2">Siswa</option>
-                        <option value="3">Lainnya</option>
-                        <div class="invalid-feedback">Please Select your Role!</div>
-                    </div>
+
 
                     <div class="col-12">
                       <div class="form-check">
@@ -139,12 +124,7 @@ if (isset($_POST['email'])) {
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Login</button>
                     </div>
-                    <!-- 
-                    karena location ini tidak digunakan, maka dihapus
-                    <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
-                    </div>
-                     -->
+
                   </form>
 
                 </div>

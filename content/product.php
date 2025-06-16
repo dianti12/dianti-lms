@@ -1,5 +1,5 @@
 <?php
-$query = mysqli_query($config, "SELECT * FROM instructors ORDER BY id DESC");
+$query = mysqli_query($config, "SELECT products.*, categories.name as category_name FROM products LEFT JOIN categories ON categories.id = products.id_category ORDER BY id DESC");
 //12345, 54321
 $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
@@ -11,7 +11,7 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
             <div class="card-body">
                 <h5 class="card-title">Data Instruktur</h5>
                 <div class="mb-3" align="right">
-                    <a href="?page=tambah-instruktur" class="btn btn-primary">Add Instruktur</a>
+                    <a href="?page=tambah-product" class="btn btn-primary">Add Product</a>
                 </div>
 
                 <div class="table-responsive">
@@ -20,12 +20,11 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama Instruktur</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Pendidikan</th>
-                                <th>Nomor_Hp</th>
-                                <th>Email</th>
-                                <th>Alamat</th>
+                                <th>Category</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Description</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -33,20 +32,17 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                             <?php foreach ($rows as $index => $row): ?>
                                 <tr>
                                     <td><?php echo $index += 1; ?></td>
+                                    <td><?php echo $row['category_name'] ?></td>
                                     <td><?php echo $row['name'] ?></td>
-                                    <td><?php echo ($row['gender'] == '0') ? 'Laki-laki' : (($row['gender'] == '1') ? 'Perempuan' : '-'); ?></td>
-                                    <td><?php echo $row['education'] ?></td>
-                                    <td><?php echo $row['phone'] ?></td>
-                                    <td><?php echo $row['email'] ?></td>
-                                    <td><?php echo $row['address'] ?></td>
+                                    <td><?php echo $row['price'] ?></td>
+                                    <td><?php echo $row['qty'] ?></td>
+                                    <td><?php echo $row['description'] ?></td>
                                     <td>
-                                        <a href="?page=tambah-instruktur-major&id=<?php echo $row['id'] ?>"
-                                            class="btn btn-warning">Add Major</a>
 
-                                        <a href="?page=tambah-instruktur&edit=<?php echo $row['id'] ?>"
+                                        <a href="?page=tambah-product&edit=<?php echo $row['id'] ?>"
                                             class="btn btn-primary">Edit</a>
                                         <a onclick="return confirm ('Are you sure wanna delete this data?')"
-                                            class="btn btn-danger" name="delete" href="?page=tambah-instruktur&delete=<?php echo $row['id'] ?>">Delete</a>
+                                            class="btn btn-danger" name="delete" href="?page=tambah-product&delete=<?php echo $row['id'] ?>">Delete</a>
                                     </td>
                                 </tr>
                             <?php endforeach ?>

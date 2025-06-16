@@ -1,8 +1,8 @@
-<?php 
-
-session_start(); 
+<?php
+session_start();
 include 'config/koneksi.php';
 ob_start();
+include 'settingRole.php';
 
 ?>
 
@@ -49,10 +49,10 @@ ob_start();
 <body>
 
   <!-- ======= Header ======= -->
-   <?= include 'inc/header.php' ?>
-  
+  <?= include 'inc/header.php' ?>
+
   <!-- ======= Sidebar ======= -->
-    <?= include 'inc/sidebar.php' ?>
+  <?= include 'inc/sidebar.php' ?>
 
   <main id="main" class="main">
 
@@ -68,17 +68,17 @@ ob_start();
     </div><!-- End Page Title -->
 
     <section class="section">
-                    <?php
-                                if (isset($_GET['page'])) {
-                                    // jika file ada 
-                                    if (file_exists("content/" . $_GET['page'] . ".php")) {
-                                        include('content/' . $_GET['page'] . ".php");
-                                    } else {
-                                    }
-                                } else {
-                                    include 'content/dashboard.php';
-                                }
-                                ?>
+      <?php
+      if (isset($_GET['page'])) {
+        // jika file ada 
+        if (file_exists("content/" . $_GET['page'] . ".php")) {
+          include('content/' . $_GET['page'] . ".php");
+        } else {
+        }
+      } else {
+        include 'content/dashboard.php';
+      }
+      ?>
     </section>
 
   </main><!-- End #main -->
